@@ -1,0 +1,65 @@
+---
+import Logo from '../assets/brand/logo.svg';
+---
+
+<section id="top" class="mx-auto max-w-(--container-page) px-6 pb-20 pt-16 lg:pt-24">
+	<div class="grid grid-cols-1 items-center gap-12 lg:grid-cols-[1.1fr_1fr] lg:gap-16">
+		<div>
+			<p
+				data-reveal
+				class="mb-5 text-xs font-semibold uppercase tracking-[0.16em] text-brand-600"
+			>
+				A Christian Humanitarian Organization
+			</p>
+			<h1
+				data-reveal
+				style="--reveal-delay:60ms"
+				class="max-w-xl text-4xl font-semibold leading-[1.1] text-brand-950 md:text-5xl lg:text-6xl"
+			>
+				Faith in action since 1973.
+			</h1>
+			<p
+				data-reveal
+				style="--reveal-delay:120ms"
+				class="mt-6 max-w-md text-base leading-relaxed text-ink-700 md:text-lg"
+			>
+				A Christian humanitarian organization supporting relief and development projects
+				across Sri Lanka for over fifty years.
+			</p>
+			<div data-reveal style="--reveal-delay:180ms" class="mt-9 flex flex-wrap items-center gap-4">
+				<a
+					href="#contact"
+					class="rounded-full bg-brand-800 px-7 py-3.5 text-sm font-medium text-paper-50 transition-colors duration-150 ease-out hover:bg-brand-700 active:scale-[0.97]"
+				>
+					Get in Touch
+				</a>
+				<a
+					href="#programs"
+					class="rounded-full border border-brand-800/25 px-7 py-3.5 text-sm font-medium text-brand-900 transition-colors duration-150 ease-out hover:bg-brand-50 active:scale-[0.97]"
+				>
+					Our Programs
+				</a>
+			</div>
+		</div>
+
+		<div class="relative" data-reveal style="--reveal-delay:120ms">
+			<div
+				class="mx-auto grid w-full max-w-sm place-items-center rounded-2xl bg-brand-50 px-8 py-14 ring-1 ring-brand-800/10 sm:max-w-md sm:py-16 lg:aspect-[4/5] lg:max-w-none lg:p-14"
+			>
+				<Logo
+					class="h-auto w-full max-w-[11rem] text-brand-800 sm:max-w-[14rem] lg:max-w-[17rem]"
+					role="img"
+					aria-label="The FARMS LANKA emblem: a cross rising from a globe, framed by leaves"
+				/>
+			</div>
+			<div
+				class="absolute hidden max-w-[13rem] rounded-xl border border-brand-800/10 bg-paper-50 p-4 shadow-[0_16px_40px_-20px_rgba(15,36,25,0.3)] lg:-bottom-6 lg:-left-6 lg:block"
+			>
+				<p class="font-display text-2xl font-semibold text-brand-800">50+</p>
+				<p class="mt-1 text-xs leading-snug text-ink-500">
+					Years serving communities across Sri Lanka
+				</p>
+			</div>
+		</div>
+	</div>
+</section>

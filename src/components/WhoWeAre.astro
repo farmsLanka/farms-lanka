@@ -1,0 +1,45 @@
+---
+import { Image } from 'astro:assets';
+import premises from '../assets/photos/front-premises.jpg';
+---
+
+<section id="who-we-are" class="bg-brand-50/60 py-20 lg:py-28">
+	<div class="mx-auto max-w-(--container-page) px-6">
+		<div class="grid grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-16">
+			<div class="order-2 lg:order-1" data-reveal>
+				<Image
+					src={premises}
+					alt="The FARMS LANKA office and community development centre in Moratuwa, set among trees"
+					widths={[480, 800, 1200]}
+					sizes="(min-width: 1024px) 45vw, 100vw"
+					loading="lazy"
+					class="aspect-[4/3] w-full rounded-2xl object-cover"
+				/>
+			</div>
+
+			<div class="order-1 lg:order-2" data-reveal>
+				<h2 class="font-display text-3xl font-semibold text-brand-950 md:text-4xl">Who We Are</h2>
+				<div class="mt-6 max-w-[50ch] space-y-5 text-base leading-relaxed text-ink-700">
+					<p>
+						FARMS LANKA is a Christian humanitarian organization dedicated to relief and
+						development, faithfully serving communities across Sri Lanka since 1973. Founded to
+						address fundamental human needs such as food security, shelter, proper education,
+						and sustainable livelihoods, we began by empowering communities through
+						agriculture and animal husbandry. As the needs of communities evolved, our work expanded into sewing,
+						fisheries, handicrafts, grocery, carpentry, cottage industry, and other
+						family-based initiatives.
+					</p>
+					<p>
+						For more than five decades we have served with compassion, dignity, and practical
+						support, inspired by the love of Christ and a desire to demonstrate God's love through
+						meaningful action, helping families build sustainable, self-supporting futures.
+					</p>
+					<p>
+						Today, by God's grace, the mission continues, serving communities, transforming lives,
+						and bringing hope to those in need.
+					</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>

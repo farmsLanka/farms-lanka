@@ -1,0 +1,52 @@
+---
+import { Icon } from 'astro-icon/components';
+
+const awards = [
+	{
+		icon: 'ph:seal-check',
+		title: 'Sustainable Development Goals Excellence Service Award',
+	},
+	{
+		icon: 'ph:medal',
+		title: 'Global Youth Service Award',
+	},
+	{
+		icon: 'ph:trophy',
+		title: 'Thirasarashuree Award',
+	},
+	{
+		icon: 'ph:handshake',
+		title: 'Peace Ambassador Award',
+		recipient: 'Mr. Clarence I. Mendis, General Manager',
+	},
+];
+---
+
+<section id="certifications" class="bg-brand-900 py-20 text-paper-50 lg:py-24">
+	<div class="mx-auto max-w-(--container-page) px-6">
+		<div class="max-w-2xl" data-reveal>
+			<h2 class="font-display text-3xl font-semibold md:text-4xl">Certifications & Awards</h2>
+			<p class="mt-4 text-base leading-relaxed text-brand-100">
+				Recognition earned through five decades of consistent, grounded work.
+			</p>
+		</div>
+
+		<div
+			class="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-4 lg:gap-0 lg:divide-x lg:divide-paper-50/12"
+		>
+			{
+				awards.map((award, i) => (
+					<div
+						data-reveal
+						style={`--reveal-delay:${i * 60}ms`}
+						class="rounded-xl border border-paper-50/12 bg-paper-50/5 p-5 lg:rounded-none lg:border-0 lg:bg-transparent lg:p-0 lg:px-8 lg:first:pl-0 lg:last:pr-0"
+					>
+						<Icon name={award.icon} class="h-7 w-7 text-gold-400" />
+						<h3 class="mt-4 font-display text-lg font-semibold leading-snug">{award.title}</h3>
+						{award.recipient && <p class="mt-2 text-sm text-brand-100">{award.recipient}</p>}
+					</div>
+				))
+			}
+		</div>
+	</div>
+</section>

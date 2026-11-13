@@ -1,0 +1,30 @@
+---
+import Logo from '../assets/brand/logo.svg';
+
+const year = new Date().getFullYear();
+---
+
+<footer class="border-t border-brand-800/10 bg-brand-50/60 py-12">
+	<div class="mx-auto max-w-(--container-page) px-6">
+		<div class="flex flex-col gap-8 sm:flex-row sm:items-start sm:justify-between">
+			<div class="flex items-center gap-3">
+				<Logo class="h-9 w-auto shrink-0 text-brand-800" aria-hidden="true" />
+				<div>
+					<p class="font-display text-base font-semibold text-brand-900">FARMS LANKA</p>
+					<p class="text-sm text-ink-500">Relief and development since 1973</p>
+				</div>
+			</div>
+
+			<p class="max-w-xs text-sm leading-relaxed text-ink-500">
+				No 91/8 St. Peter's Road, Moratuwa, Sri Lanka
+			</p>
+		</div>
+
+		<div
+			class="mt-10 flex flex-col gap-2 border-t border-brand-800/10 pt-6 text-xs text-ink-500 sm:flex-row sm:items-center sm:justify-between"
+		>
+			<p>&copy; {year} FARMS LANKA. All rights reserved.</p>
+			<p>Built pro bono by Irosh Mathews.</p>
+		</div>
+	</div>
+</footer>

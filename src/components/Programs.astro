@@ -1,0 +1,104 @@
+---
+import { Icon } from 'astro-icon/components';
+import { Image } from 'astro:assets';
+
+import agriculture from '../assets/photos/agriculture-seminars.jpg';
+import livelihood from '../assets/photos/livelihood-projects.jpg';
+import disaster from '../assets/photos/disaster-relief.jpg';
+import awareness from '../assets/photos/social-awareness.jpg';
+import churches from '../assets/photos/churches-societies.jpg';
+import schools from '../assets/photos/schools-children.jpg';
+
+const programs = [
+	{
+		icon: 'ph:plant',
+		title: 'Agriculture Seminars',
+		description:
+			"Hands-on training in sustainable farming and animal husbandry — the work that began our ministry in 1973 and still anchors it today. Seminars pair proven techniques with the realities of each community's land, helping families grow enough to eat and enough to sell.",
+		image: agriculture,
+		alt: 'A FARMS LANKA facilitator leading an agriculture seminar for a seated group of participants',
+	},
+	{
+		icon: 'ph:handshake',
+		title: 'Livelihood Projects',
+		description:
+			'Skills training in sewing, fisheries, handicrafts, grocery, carpentry, and cottage industry that give families a trade to build lasting income on. As community needs grew beyond agriculture, this became the broadest arm of our work — turning a skill into steady, self-supporting income.',
+		image: livelihood,
+		alt: 'FARMS LANKA staff visiting a family poultry enterprise set up through a livelihood project',
+	},
+	{
+		icon: 'ph:first-aid-kit',
+		title: 'Disaster Management & Relief',
+		description:
+			'Practical support delivered quickly when communities face crisis — food, shelter materials, and hands-on assistance for families who have lost the most. We stay engaged through the harder, longer work of recovery, not just the emergency response.',
+		image: disaster,
+		alt: 'Relief supplies prepared for distribution at a FARMS LANKA community gathering',
+	},
+	{
+		icon: 'ph:megaphone-simple',
+		title: 'Social Awareness Programs',
+		description:
+			"Community conversations on health, hygiene, dignity, and self-reliance, shared in settings people already trust. Practical knowledge that's easy to act on, aimed at changing daily life rather than delivering a one-time message.",
+		image: awareness,
+		alt: 'A health and awareness session being run for young people at a community centre',
+	},
+	{
+		icon: 'ph:church',
+		title: 'Churches & Societies',
+		description:
+			"Working alongside local congregations and community societies to reach families we couldn't reach alone. Their trust within the community, combined with our resources and experience, lets care extend further than either could manage separately.",
+		image: churches,
+		alt: 'A church choir and FARMS LANKA team leading an outdoor gathering for village residents',
+	},
+	{
+		icon: 'ph:graduation-cap',
+		title: 'Schools & Children’s Clubs',
+		description:
+			'Education support, mentorship, and children’s clubs run in partnership with schools and preschools. An investment in the next generation, so the progress made today carries forward into the families of tomorrow.',
+		image: schools,
+		alt: 'Children taking part in a balloon game at a FARMS LANKA children’s club event',
+	},
+];
+---
+
+<section id="programs" class="py-24 lg:py-32">
+	<div class="mx-auto max-w-(--container-page) px-6">
+		<div class="max-w-2xl" data-reveal>
+			<h2 class="font-display text-3xl font-semibold text-brand-950 md:text-4xl">Our Programs</h2>
+			<p class="mt-4 text-base leading-relaxed text-ink-700 md:text-lg">
+				Five decades of work across Sri Lanka, shaped by what each community needs most.
+			</p>
+		</div>
+
+		<div class="mt-14 grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-7">
+			{
+				programs.map((program, i) => (
+					<article
+						data-reveal
+						style={`--reveal-delay:${(i % 2) * 70}ms`}
+						class="group relative flex min-h-96 flex-col justify-end overflow-hidden rounded-2xl lg:min-h-104"
+					>
+						<Image
+							src={program.image}
+							alt={program.alt}
+							widths={[480, 800, 1200]}
+							sizes="(min-width: 768px) 50vw, 100vw"
+							loading="lazy"
+							class="absolute inset-0 h-full w-full object-cover transition-transform duration-500 ease-out motion-reduce:transition-none md:group-hover:scale-105"
+						/>
+						<div class="absolute inset-0 bg-gradient-to-t from-brand-950/95 via-brand-950/65 to-brand-950/20" />
+						<div class="relative p-7 lg:p-8">
+							<Icon name={program.icon} class="h-7 w-7 text-brand-200" />
+							<h3 class="mt-3 font-display text-xl font-semibold text-paper-50 lg:text-2xl">
+								{program.title}
+							</h3>
+							<p class="mt-3 max-w-md text-sm leading-relaxed text-paper-50/85 lg:text-base">
+								{program.description}
+							</p>
+						</div>
+					</article>
+				))
+			}
+		</div>
+	</div>
+</section>

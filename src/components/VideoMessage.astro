@@ -1,0 +1,79 @@
+---
+import { Icon } from "astro-icon/components";
+
+const videoId = "AobfTkW03tI";
+const startSeconds = 30;
+---
+
+<section id="message" class="py-20 lg:py-28">
+  <div class="mx-auto max-w-(--container-page) px-6">
+    <div class="max-w-2xl" data-reveal>
+      <h2 class="font-display text-3xl font-semibold text-brand-950 md:text-4xl">
+        A Message From Clarence Mendis
+      </h2>
+      <p class="mt-4 text-base leading-relaxed text-ink-700">
+        Clarence I. Mendis, General Manager of FARMS LANKA, shares more about
+        our mission and the communities we serve.
+      </p>
+    </div>
+
+    <div class="mt-10" data-reveal style="--reveal-delay:80ms">
+      <div
+        id="video-frame"
+        class="group relative aspect-video overflow-hidden rounded-2xl border border-brand-800/10 bg-brand-950"
+        data-video-id={videoId}
+        data-start={startSeconds}
+      >
+        <img
+          src={`https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`}
+          onerror="this.onerror=null;this.src=this.src.replace('maxresdefault','hqdefault')"
+          alt="Clarence I. Mendis, General Manager of FARMS LANKA, speaking during an interview"
+          loading="lazy"
+          width="1280"
+          height="720"
+          class="h-full w-full object-cover"
+        />
+        <button
+          type="button"
+          id="video-play-button"
+          aria-label="Play the video message from Clarence Mendis"
+          class="absolute inset-0 grid cursor-pointer place-items-center bg-brand-950/25 transition-colors duration-200 ease-out hover:bg-brand-950/35 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-paper-50"
+        >
+          <span class="grid h-16 w-16 place-items-center rounded-full bg-paper-50 text-brand-800 shadow-[0_16px_40px_-16px_rgba(15,36,25,0.5)] transition-transform duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:scale-[1.06] group-active:scale-[0.97] motion-reduce:transition-none motion-reduce:group-hover:scale-100">
+            <Icon name="ph:play-fill" class="h-6 w-6 translate-x-0.5" />
+          </span>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const frame = document.getElementById("video-frame");
+  const playButton = document.getElementById("video-play-button");
+
+  playButton?.addEventListener("click", () => {
+    if (!frame) return;
+
+    const videoId = frame.dataset.videoId;
+    const params = new URLSearchParams({
+      start: frame.dataset.start || "0",
+      autoplay: "1",
+      rel: "0",
+      modestbranding: "1",
+    });
+
+    const iframe = document.createElement("iframe");
+    iframe.src = `https://www.youtube-nocookie.com/embed/${videoId}?${params.toString()}`;
+    iframe.title = "FARMS LANKA video message from Clarence Mendis";
+    iframe.className = "absolute inset-0 h-full w-full";
+    iframe.setAttribute(
+      "allow",
+      "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen",
+    );
+    iframe.setAttribute("allowfullscreen", "");
+    iframe.setAttribute("frameborder", "0");
+
+    frame.replaceChildren(iframe);
+  });
+</script>

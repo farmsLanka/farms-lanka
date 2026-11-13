@@ -1,0 +1,85 @@
+---
+import { Icon } from 'astro-icon/components';
+
+const address = "No 91/8 St. Peter's Road, Moratuwa, Sri Lanka";
+const coords = '6.7663933,79.8891938';
+const mapEmbedSrc = `https://www.google.com/maps?q=${coords}&z=17&hl=en&output=embed`;
+const directionsHref = `https://www.google.com/maps/dir/?api=1&destination=${coords}`;
+
+const details = [
+	{ icon: 'ph:map-pin', label: 'Address', value: "No 91/8 St. Peter's Road, Moratuwa" },
+	{ icon: 'ph:phone', label: 'Landline', value: '011 2657564', href: 'tel:+94112657564' },
+	{ icon: 'ph:phone', label: 'Mobile', value: '070 106 5358', href: 'tel:+94701065358' },
+	{ icon: 'ph:printer', label: 'Fax', value: '011 2659102' },
+	{
+		icon: 'ph:envelope-simple',
+		label: 'Email',
+		value: 'farmslanka1973@gmail.com',
+		href: 'mailto:farmslanka1973@gmail.com',
+	},
+	{ icon: 'ph:clock', label: 'Business Hours', value: 'Monday to Friday, 10:30 AM - 5:00 PM' },
+];
+---
+
+<section id="contact" class="py-20 lg:py-28">
+	<div class="mx-auto max-w-(--container-page) px-6">
+		<div class="max-w-2xl" data-reveal>
+			<h2 class="font-display text-3xl font-semibold text-brand-950 md:text-4xl">Get in Touch</h2>
+			<p class="mt-4 text-base leading-relaxed text-ink-700">
+				Reach out to learn more about our work or find us at our office in Moratuwa.
+			</p>
+		</div>
+
+		<div class="mt-12 grid grid-cols-1 gap-10 lg:grid-cols-2 lg:gap-16">
+			<dl class="grid grid-cols-1 gap-6 sm:grid-cols-2" data-reveal>
+				{
+					details.map((detail) => (
+						<div class="flex items-start gap-3">
+							<Icon name={detail.icon} class="mt-0.5 h-5 w-5 shrink-0 text-brand-600" />
+							<div>
+								<dt class="text-xs font-semibold uppercase tracking-wide text-ink-500">
+									{detail.label}
+								</dt>
+								{detail.href ? (
+									<dd class="mt-1">
+										<a
+											href={detail.href}
+											class="text-sm font-medium text-brand-900 transition-colors duration-150 hover:text-brand-600"
+										>
+											{detail.value}
+										</a>
+									</dd>
+								) : (
+									<dd class="mt-1 text-sm font-medium text-brand-900">{detail.value}</dd>
+								)}
+							</div>
+						</div>
+					))
+				}
+			</dl>
+
+			<div data-reveal style="--reveal-delay:80ms">
+				<div class="overflow-hidden rounded-2xl border border-brand-800/10">
+					<iframe
+						src={mapEmbedSrc}
+						title={`Map showing the FARMS LANKA office at ${address}`}
+						width="100%"
+						height="320"
+						style="border:0"
+						loading="lazy"
+						referrerpolicy="no-referrer-when-downgrade"
+					></iframe>
+				</div>
+				<a
+					href={directionsHref}
+					target="_blank"
+					rel="noopener noreferrer"
+					class="mt-4 inline-flex items-center gap-2 text-sm font-medium text-brand-700 transition-colors duration-150 hover:text-brand-600"
+				>
+					Get Directions
+					<Icon name="ph:arrow-square-out" class="h-4 w-4" />
+				</a>
+			</div>
+		</div>
+	</div>
+</section>

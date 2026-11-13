@@ -1,0 +1,186 @@
+---
+import '@fontsource/source-serif-4/400.css';
+import '@fontsource/source-serif-4/600.css';
+import '@fontsource/source-serif-4/700.css';
+import '@fontsource/work-sans/400.css';
+import '@fontsource/work-sans/500.css';
+import '@fontsource/work-sans/600.css';
+import '../styles/global.css';
+
+interface Props {
+	title?: string;
+	description?: string;
+	image?: string;
+}
+
+const {
+	title = 'FARMS LANKA | Christian Humanitarian Organization in Sri Lanka Since 1973',
+	description =
+		'FARMS LANKA is a Christian humanitarian organization in Moratuwa, Sri Lanka, serving communities through relief and development projects since 1973 — agriculture seminars, livelihood projects, disaster relief, and social awareness programs.',
+	image = '/og-image.jpg',
+} = Astro.props;
+
+// Google Search Console: paste the token from the "HTML tag" verification
+// method between the quotes, then rebuild and redeploy. Leave empty to omit.
+const googleSiteVerification = '';
+
+const site = Astro.site ?? new URL('https://farmslanka.org');
+const canonical = new URL(Astro.url.pathname, site).href;
+const ogImage = new URL(image, site).href;
+
+const keywords = [
+	'FARMS LANKA',
+	'Farms Lanka',
+	'Farms Lanka Sri Lanka',
+	'Christian humanitarian organization Sri Lanka',
+	'NGO Sri Lanka',
+	'NGO Moratuwa',
+	'relief and development Sri Lanka',
+	'livelihood projects Sri Lanka',
+	'agriculture seminars Sri Lanka',
+	'disaster relief Sri Lanka',
+	'charity organization Sri Lanka',
+	'community development Sri Lanka',
+].join(', ');
+
+const structuredData = {
+	'@context': 'https://schema.org',
+	'@type': 'NGO',
+	'@id': `${site.origin}/#organization`,
+	name: 'FARMS LANKA',
+	alternateName: ['Farms Lanka', 'FARMS LANKA Org'],
+	description:
+		'A Christian humanitarian organization supporting relief and development projects across Sri Lanka since 1973.',
+	url: site.origin,
+	logo: new URL('/icon-512.png', site).href,
+	image: ogImage,
+	foundingDate: '1973',
+	email: 'farmslanka1973@gmail.com',
+	telephone: '+94112657564',
+	faxNumber: '+94112659102',
+	address: {
+		'@type': 'PostalAddress',
+		streetAddress: "No 91/8 St. Peter's Road",
+		addressLocality: 'Moratuwa',
+		addressCountry: 'LK',
+	},
+	geo: {
+		'@type': 'GeoCoordinates',
+		latitude: 6.7663933,
+		longitude: 79.8891938,
+	},
+	areaServed: {
+		'@type': 'Country',
+		name: 'Sri Lanka',
+	},
+	openingHoursSpecification: [
+		{
+			'@type': 'OpeningHoursSpecification',
+			dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+			opens: '10:30',
+			closes: '17:00',
+		},
+	],
+	contactPoint: [
+		{
+			'@type': 'ContactPoint',
+			telephone: '+94701065358',
+			contactType: 'general enquiries',
+			email: 'farmslanka1973@gmail.com',
+			areaServed: 'LK',
+			availableLanguage: ['en', 'si'],
+		},
+	],
+	award: [
+		'Sustainable Development Goals Excellence Service Award',
+		'Global Youth Service Award',
+		'Thirasarashuree Award',
+		'Peace Ambassador Award',
+	],
+	knowsAbout: [
+		'Humanitarian relief',
+		'Community development',
+		'Sustainable agriculture',
+		'Livelihood development',
+		'Disaster management',
+	],
+};
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="generator" content={Astro.generator} />
+
+		<title>{title}</title>
+		<meta name="description" content={description} />
+		<meta name="keywords" content={keywords} />
+		<link rel="canonical" href={canonical} />
+		<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
+		{
+			googleSiteVerification && (
+				<meta name="google-site-verification" content={googleSiteVerification} />
+			)
+		}
+
+		<!-- Icons -->
+		<link rel="icon" href="/favicon.ico" sizes="32x32" />
+		<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+		<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+		<meta name="theme-color" content="#14301f" />
+
+		<!-- Open Graph -->
+		<meta property="og:type" content="website" />
+		<meta property="og:site_name" content="FARMS LANKA" />
+		<meta property="og:locale" content="en_LK" />
+		<meta property="og:url" content={canonical} />
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		<meta property="og:image" content={ogImage} />
+		<meta property="og:image:width" content="1200" />
+		<meta property="og:image:height" content="630" />
+		<meta
+			property="og:image:alt"
+			content="The FARMS LANKA emblem over a photograph of the organization's premises in Moratuwa"
+		/>
+
+		<!-- Twitter / X -->
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:title" content={title} />
+		<meta name="twitter:description" content={description} />
+		<meta name="twitter:image" content={ogImage} />
+
+		<script type="application/ld+json" set:html={JSON.stringify(structuredData)} is:inline />
+
+		<script is:inline>
+			document.documentElement.classList.add('js');
+		</script>
+	</head>
+	<body>
+		<slot />
+
+		<script>
+			const revealables = document.querySelectorAll('[data-reveal]');
+			const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+			if (reduceMotion || !('IntersectionObserver' in window)) {
+				revealables.forEach((el) => el.classList.add('is-visible'));
+			} else {
+				const observer = new IntersectionObserver(
+					(entries) => {
+						for (const entry of entries) {
+							if (entry.isIntersecting) {
+								entry.target.classList.add('is-visible');
+								observer.unobserve(entry.target);
+							}
+						}
+					},
+					{ rootMargin: '0px 0px -8% 0px', threshold: 0.08 }
+				);
+				revealables.forEach((el) => observer.observe(el));
+			}
+		</script>
+	</body>
+</html>
