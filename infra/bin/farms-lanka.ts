@@ -8,7 +8,7 @@ import { FarmsLankaSiteStack } from '../lib/site-stack';
 
 
 const DOMAIN_NAME = 'farmslanka.org';
-const GITHUB_REPO = 'farmsLanka/farms-lanka';
+const GITHUB_REPO = 'farmsLanka@360388904/farms-lanka@1456468154';
 const GITHUB_BRANCH = 'main';
 
 const env: cdk.Environment = {
