@@ -11,9 +11,12 @@ interface Props {
 	title?: string;
 	description?: string;
 	image?: string;
+	/** Keep the page out of search results (used by the 404 page). */
+	noindex?: boolean;
 }
 
 const {
+	noindex = false,
 	title = 'FARMS LANKA | Christian Humanitarian Organization in Sri Lanka Since 1973',
 	description =
 		'FARMS LANKA is a Christian humanitarian organization in Moratuwa, Sri Lanka, serving communities through relief and development projects since 1973 — agriculture seminars, livelihood projects, disaster relief, and social awareness programs.',
@@ -118,7 +121,10 @@ const structuredData = {
 		<meta name="description" content={description} />
 		<meta name="keywords" content={keywords} />
 		<link rel="canonical" href={canonical} />
-		<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
+		<meta
+			name="robots"
+			content={noindex ? 'noindex, follow' : 'index, follow, max-image-preview:large, max-snippet:-1'}
+		/>
 		{
 			googleSiteVerification && (
 				<meta name="google-site-verification" content={googleSiteVerification} />

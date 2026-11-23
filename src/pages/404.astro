@@ -1,0 +1,53 @@
+---
+/**
+ * 404 page.
+ *
+ * Astro builds this to /404.html, which the CloudFront distribution serves
+ * for both 403 and 404 responses from S3. Without this file those errors fall
+ * back to CloudFront's bare XML error page.
+ *
+ * Served from arbitrary URLs, so every link is root-absolute.
+ */
+import Layout from '../layouts/Layout.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout
+	title="Page not found | FARMS LANKA"
+	description="The page you were looking for could not be found. Return to the FARMS LANKA home page."
+	noindex
+>
+	<div class="flex min-h-svh flex-col">
+		<main class="mx-auto flex w-full max-w-(--container-page) flex-1 flex-col justify-center px-6 py-20">
+			<p
+				data-reveal
+				class="mb-5 text-xs font-semibold uppercase tracking-[0.16em] text-brand-600"
+			>
+				Error 404
+			</p>
+			<h1
+				data-reveal
+				style="--reveal-delay:60ms"
+				class="max-w-4xl text-5xl font-semibold leading-[1.05] text-brand-950 md:text-7xl lg:text-8xl"
+			>
+				Page not found.
+			</h1>
+			<p
+				data-reveal
+				style="--reveal-delay:120ms"
+				class="mt-6 max-w-md text-base leading-relaxed text-ink-700 md:text-lg"
+			>
+				The page may have been moved or removed, or the address may have been mistyped.
+			</p>
+			<div data-reveal style="--reveal-delay:180ms" class="mt-9">
+				<a
+					href="/"
+					class="inline-block rounded-full bg-brand-800 px-7 py-3.5 text-sm font-medium text-paper-50 transition-[background-color,transform] duration-150 ease-out hover:bg-brand-700 active:scale-[0.97]"
+				>
+					Back to Home
+				</a>
+			</div>
+		</main>
+		<Footer />
+	</div>
+</Layout>

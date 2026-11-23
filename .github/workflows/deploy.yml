@@ -1,0 +1,111 @@
+name: Deploy to AWS
+
+# Runs on every push to main, and on demand from the Actions tab.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# Only one deploy at a time. If you push twice quickly, the first run is
+# cancelled rather than racing the second one to S3.
+concurrency:
+  group: deploy-production
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    name: Build and deploy
+    runs-on: ubuntu-latest
+
+    # These permissions are what make OIDC work.
+    #   id-token: write  → lets the job request a signed token from GitHub,
+    #                      which AWS exchanges for temporary credentials.
+    #   contents: read   → lets the job check out the repo.
+    # Without id-token: write the AWS login step fails with a confusing
+    # "Credentials could not be loaded" error.
+    permissions:
+      id-token: write
+      contents: read
+
+    # Set these under: Settings → Secrets and variables → Actions → Variables.
+    # They are repository VARIABLES, not secrets — none of them is sensitive.
+    # The role ARN is useless to anyone whose repo does not match the trust
+    # policy, which is the whole point of OIDC.
+    env:
+      AWS_REGION: us-east-1
+
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          # Astro 7 requires >= 22.12.0 (see package.json "engines").
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        # `npm ci` installs exactly what package-lock.json specifies.
+        # Unlike `npm install` it never silently updates a dependency, so the
+        # build is reproducible.
+        run: npm ci
+
+      - name: Build the site
+        run: npm run build
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ vars.AWS_DEPLOY_ROLE_ARN }}
+          aws-region: ${{ env.AWS_REGION }}
+          role-session-name: github-actions-farms-lanka
+
+      # ---------------------------------------------------------------------
+      # Upload in two passes, because the two kinds of file want opposite
+      # caching rules.
+      # ---------------------------------------------------------------------
+
+      - name: Upload hashed assets (long cache)
+        # Everything under _astro/ has a content hash in its filename, so a
+        # changed file is always a NEW filename. That makes it safe to cache
+        # for a year — the URL can never go stale.
+        #
+        # No --delete here: old hashed files are cleaned up by the second pass.
+        run: |
+          aws s3 sync dist/ "s3://${{ vars.AWS_S3_BUCKET }}" \
+            --cache-control "public,max-age=31536000,immutable" \
+            --exclude "*" \
+            --include "_astro/*"
+
+      - name: Upload everything else (no cache)
+        # index.html, robots.txt, sitemaps, favicons — these keep the same
+        # filename when their content changes, so they must NOT be cached hard
+        # or visitors keep seeing the old page after a deploy.
+        #
+        # --delete removes files from S3 that no longer exist locally. The
+        # --exclude also applies to deletion, so _astro/ is left untouched
+        # by this pass rather than being wiped.
+        run: |
+          aws s3 sync dist/ "s3://${{ vars.AWS_S3_BUCKET }}" \
+            --delete \
+            --cache-control "public,max-age=0,must-revalidate" \
+            --exclude "_astro/*"
+
+      - name: Invalidate the CloudFront cache
+        # S3 now has the new files, but CloudFront's edge locations are still
+        # serving the old ones. This tells every edge to re-fetch.
+        #
+        # "/*" counts as a single invalidation path for billing, and the first
+        # 1,000 per month are free.
+        run: |
+          aws cloudfront create-invalidation \
+            --distribution-id "${{ vars.AWS_CLOUDFRONT_DISTRIBUTION_ID }}" \
+            --paths "/*"
+
+      - name: Summary
+        run: |
+          echo "### Deployed to https://farmslanka.org" >> $GITHUB_STEP_SUMMARY
+          echo "Commit: \`${{ github.sha }}\`" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "CloudFront invalidation can take 1-2 minutes to complete." >> $GITHUB_STEP_SUMMARY

@@ -1,0 +1,11 @@
+# CDK build output and synthesized templates
+*.js
+!jest.config.js
+*.d.ts
+node_modules
+cdk.out
+cdk.context.json
+
+# Local AWS config
+.env
+.env.local
